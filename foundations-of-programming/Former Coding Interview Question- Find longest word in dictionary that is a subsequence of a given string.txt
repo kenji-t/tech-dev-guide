@@ -1,0 +1,34 @@
+https://techdevguide.withgoogle.com/paths/foundational/find-longest-word-in-dictionary-that-subsequence-of-given-string#code-challenge
+
+S = "abppplee"
+D = ["able", "ale", "apple", "bale", "kangaroo"]
+array = []
+
+def check(string1, string2, l1, l2)
+  string1.split('').each_with_index do |s1, j|
+    string2.split('').each_with_index do |s2, k|
+      if s1 == s2
+        return [s1, j+l1, k+l2]
+      end
+    end
+  end
+  return [nil, -2, -2]
+end
+
+D.each_with_index do |d, i|
+  char, l1, l2 = '', -1, -1
+  str = ''
+  d.length.times do |j|
+    char, l1, l2 = check(S[l1+1..S.length], d[l2+1..d.length], l1+1, l2+1)
+    if l1 > -1 && l2 > -1
+      str << char
+    else
+      break
+    end
+  end
+  if D.include?(str)
+    array << str
+  end
+end
+
+puts array.max
